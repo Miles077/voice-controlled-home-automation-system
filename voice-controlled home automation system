@@ -1,0 +1,42 @@
+// Voice Controlled Home Appliances
+// Arduino Uno + HC-05 Bluetooth + Relay
+
+char data;  // Variable to store received command
+
+void setup() {
+  Serial.begin(9600);       // Start serial communication (Bluetooth module)
+  
+  pinMode(8, OUTPUT);       // Appliance 1 (Light)
+  pinMode(9, OUTPUT);       // Appliance 2 (Fan)
+  
+  digitalWrite(8, LOW);     // Initially OFF
+  digitalWrite(9, LOW);     // Initially OFF
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    data = Serial.read();   // Read incoming command
+    
+    switch (data) {
+      case '1':   // Turn ON Light
+        digitalWrite(8, HIGH);
+        break;
+
+      case '2':   // Turn OFF Light
+        digitalWrite(8, LOW);
+        break;
+
+      case '3':   // Turn ON Fan
+        digitalWrite(9, HIGH);
+        break;
+
+      case '4':   // Turn OFF Fan
+        digitalWrite(9, LOW);
+        break;
+
+      default:
+        // Ignore unknown commands
+        break;
+    }
+  }
+}
